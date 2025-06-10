@@ -1,0 +1,231 @@
+Microsoft Windows [Version 10.0.26100.4061]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\bhagesh>mongosh
+Current Mongosh Log ID: 682df6361f552862d0b5f898
+Connecting to:          mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.5.0
+Using MongoDB:          8.0.6
+Using Mongosh:          2.5.0
+mongosh 2.5.1 is available for download: https://www.mongodb.com/try/download/shell
+
+For mongosh info see: https://www.mongodb.com/docs/mongodb-shell/
+
+------
+   The server generated these startup warnings when booting
+   2025-05-21T05:50:51.088+05:30: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+------
+
+
+test> use stocks
+switched to db stocks
+stocks> show collections
+values
+stocks> db.values.findOne()
+{
+  _id: ObjectId('682dd946f55758669db5f899'),
+  stock_symbol: 'AAPL',
+  date: '2023-01-01',
+  close: 150.12
+}
+stocks> db.values.countDocuments()
+9
+stocks> db.values.find({"stock_symbol": "GOOG"}).sort({date: -1}).limit(1)
+[
+  {
+    _id: ObjectId('682dd946f55758669db5f89b'),
+    stock_symbol: 'GOOG',
+    date: '2023-01-01',
+    close: 2800.5
+  }
+]
+stocks> db.values.find({}).sort({close: -1}).limit(1)
+[
+  {
+    _id: ObjectId('682de22172fc6974719f07e0'),
+    exchange: 'NASDAQ',
+    stock_symbol: 'BORD',
+    date: '2000-09-25',
+    open: 7500,
+    high: 7500,
+    low: 7500,
+    close: 7500,
+    volume: 0,
+    adj_close: 6679.94
+  }
+]
+stocks> db.values.find({}).sort({close: -1}).limit(1).explain("executionStats")
+{
+  explainVersion: '1',
+  queryPlanner: {
+    namespace: 'stocks.values',
+    parsedQuery: {},
+    indexFilterSet: false,
+    queryHash: '98DD8324',
+    planCacheShapeHash: '98DD8324',
+    planCacheKey: '04C99AAC',
+    optimizationTimeMillis: 5,
+    maxIndexedOrSolutionsReached: false,
+    maxIndexedAndSolutionsReached: false,
+    maxScansToExplodeReached: false,
+    prunedSimilarIndexes: false,
+    winningPlan: {
+      isCached: false,
+      stage: 'LIMIT',
+      limitAmount: 1,
+      inputStage: {
+        stage: 'FETCH',
+        inputStage: {
+          stage: 'IXSCAN',
+          keyPattern: { close: -1 },
+          indexName: 'close_-1',
+          isMultiKey: false,
+          multiKeyPaths: { close: [] },
+          isUnique: false,
+          isSparse: false,
+          isPartial: false,
+          indexVersion: 2,
+          direction: 'forward',
+          indexBounds: { close: [ '[MaxKey, MinKey]' ] }
+        }
+      }
+    },
+    rejectedPlans: [
+      {
+        isCached: false,
+        stage: 'LIMIT',
+        limitAmount: 1,
+        inputStage: {
+          stage: 'FETCH',
+          inputStage: {
+            stage: 'IXSCAN',
+            keyPattern: { close: 1 },
+            indexName: 'close_1',
+            isMultiKey: false,
+            multiKeyPaths: { close: [] },
+            isUnique: false,
+            isSparse: false,
+            isPartial: false,
+            indexVersion: 2,
+            direction: 'backward',
+            indexBounds: { close: [ '[MaxKey, MinKey]' ] }
+          }
+        }
+      }
+    ]
+  },
+  executionStats: {
+    executionSuccess: true,
+    nReturned: 1,
+    executionTimeMillis: 5,
+    totalKeysExamined: 1,
+    totalDocsExamined: 1,
+    executionStages: {
+      isCached: false,
+      stage: 'LIMIT',
+      nReturned: 1,
+      executionTimeMillisEstimate: 0,
+      works: 2,
+      advanced: 1,
+      needTime: 0,
+      needYield: 0,
+      saveState: 0,
+      restoreState: 0,
+      isEOF: 1,
+      limitAmount: 1,
+      inputStage: {
+        stage: 'FETCH',
+        nReturned: 1,
+        executionTimeMillisEstimate: 0,
+        works: 1,
+        advanced: 1,
+        needTime: 0,
+        needYield: 0,
+        saveState: 0,
+        restoreState: 0,
+        isEOF: 0,
+        docsExamined: 1,
+        alreadyHasObj: 0,
+        inputStage: {
+          stage: 'IXSCAN',
+          nReturned: 1,
+          executionTimeMillisEstimate: 0,
+          works: 1,
+          advanced: 1,
+          needTime: 0,
+          needYield: 0,
+          saveState: 0,
+          restoreState: 0,
+          isEOF: 0,
+          keyPattern: { close: -1 },
+          indexName: 'close_-1',
+          isMultiKey: false,
+          multiKeyPaths: { close: [] },
+          isUnique: false,
+          isSparse: false,
+          isPartial: false,
+          indexVersion: 2,
+          direction: 'forward',
+          indexBounds: { close: [ '[MaxKey, MinKey]' ] },
+          keysExamined: 1,
+          seeks: 1,
+          dupsTested: 0,
+          dupsDropped: 0
+        }
+      }
+    }
+  },
+  queryShapeHash: 'EC23C4DDD0378926BF4E3123628BB9FC58078FD61037294A72E1CD885108A001',
+  command: {
+    find: 'values',
+    filter: {},
+    sort: { close: -1 },
+    limit: 1,
+    '$db': 'stocks'
+  },
+  serverInfo: {
+    host: 'BHAGESH',
+    port: 27017,
+    version: '8.0.6',
+    gitVersion: '80f21521ad4a3dfd5613f5d649d7058c6d46277f'
+  },
+  serverParameters: {
+    internalQueryFacetBufferSizeBytes: 104857600,
+    internalQueryFacetMaxOutputDocSizeBytes: 104857600,
+    internalLookupStageIntermediateDocumentMaxSizeBytes: 104857600,
+    internalDocumentSourceGroupMaxMemoryBytes: 104857600,
+    internalQueryMaxBlockingSortMemoryUsageBytes: 104857600,
+    internalQueryProhibitBlockingMergeOnMongoS: 0,
+    internalQueryMaxAddToSetBytes: 104857600,
+    internalDocumentSourceSetWindowFieldsMaxMemoryBytes: 104857600,
+    internalQueryFrameworkControl: 'trySbeRestricted',
+    internalQueryPlannerIgnoreIndexWithCollationForRegex: 1
+  },
+  ok: 1
+}
+stocks> db.values.find({}).sort({close: 1}).limit(1).explain("executionStats").executionStats.totalDocsExamined
+1
+stocks> db.values.find({}).sort({close: 1}).limit(1).explain("executionStats").executionStats.totalDocsExamined
+1
+stocks> db.values.find({}).sort({close: 1}).limit(1).explain("executionStats").executionStats.executionTimeMillis
+0
+stocks> db.values.createIndex({close: 1})
+close_1
+stocks> db.values.find({}).sort({close: 1}).limit(1)
+[
+  {
+    _id: ObjectId('682de22172fc6974719f07de'),
+    exchange: 'NASDAQ',
+    stock_symbol: 'MSFT',
+    date: '2008-03-07',
+    open: 30,
+    high: 32,
+    low: 29,
+    close: 31,
+    volume: 9000000,
+    adj_close: 31
+  }
+]
+stocks> db.values.find({}).sort({close: 1}).limit(1).explain("executionStats").executionStats.totalDocsExamined
+1
+stocks> db.values.find({}).sort({close: 1}).limit(1).explain("executionStats").executionStats.executionTimeMillis
+0

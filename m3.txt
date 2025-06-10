@@ -1,0 +1,92 @@
+3a) use company
+db.Employees.insertMany([
+  { name: "A", age: 30, dept: "hr", salary: 5000 },
+  { name: "B", age: 24, dept: "eng", salary: 7000 },
+  { name: "C", age: 29, dept: "eng", salary: 7500 },
+  { name: "D", age: 35, dept: "mkt", salary: 6000 },
+  { name: "E", age: 28, dept: "fin", salary: 8000 }
+])
+
+db.Employees.find({ dept: { $eq: "eng" } }).pretty()
+db.Employees.find({ dept: { $ne: "hr" } }).pretty()
+db.Employees.find({ age: { $gt: 30 } }).pretty()
+db.Employees.find({ salary: { $lt: 7000 } }).pretty()
+db.Employees.find({ age: { $lte: 28 } }).pretty()
+
+db.Employees.find({ $and: [ { dept: "eng" }, { salary: { $gt: 7000 } } ] }).pretty()
+db.Employees.find({ $or: [ { dept: "hr" }, { salary: { $lt: 6000 } } ] }).pretty()
+db.Employees.find({ dept: { $not: { $eq: "eng" } } }).pretty()
+db.Employees.find({ $nor: [ { dept: "hr" }, { salary: { $gt: 7500 } } ] }).pretty()
+  
+
+
+
+
+3b)
+
+use geoDatabase
+
+db.Places.insertMany([
+  { name: "Central Park", location: { type: "Point", coordinates: [-73.9654, 40.7829] } },
+  { name: "Times Square", location: { type: "Point", coordinates: [-73.9851, 40.7580] } },
+  { name: "Brooklyn Bridge", location: { type: "Point", coordinates: [-73.9969, 40.7061] } },
+  { name: "Empire State Building", location: { type: "Point", coordinates: [-73.9857, 40.7488] } },
+  { name: "Statue of Liberty", location: { type: "Point", coordinates: [-74.0445, 40.6892] } }
+])
+
+db.Places.find({
+  location: {
+    $near: {
+      $geometry: {
+        type: "Point",
+        coordinates: [-73.9851, 40.7580]
+      },
+      $maxDistance: 5000
+    }
+  }
+}).pretty()
+
+db.Places.find({
+  location: {
+    $geoWithin: {
+      $geometry: {
+        type: "Polygon",
+        coordinates: [
+          [
+            [-70.016, 35.715],
+            [-74.014, 40.717],
+            [-73.990, 40.730],
+            [-73.990, 40.715],
+            [-70.016, 35.715]
+          ]
+        ]
+      }
+    }
+  }
+}).pretty()
+
+use techDB
+
+db.Devices.insertMany([
+  { name: "Device A", status: 5 },
+  { name: "Device B", status: 3 },
+  { name: "Device C", status: 12 },
+  { name: "Device D", status: 10 },
+  { name: "Device E", status: 7 }
+])
+
+db.Devices.find({
+  status: { $bitsAllSet: [0, 2] }
+}).pretty()
+
+db.Devices.find({
+  status: { $bitsAnySet: [1] }
+}).pretty()
+
+db.Devices.find({
+  status: { $bitsAllClear: [1, 3] }
+}).pretty()
+
+db.Devices.find({
+  status: { $bitsAnyClear: [0] }
+}).pretty()

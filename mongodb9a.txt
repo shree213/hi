@@ -1,0 +1,58 @@
+Microsoft Windows [Version 10.0.26100.4061]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\bhagesh>mongosh
+Current Mongosh Log ID: 682dfdde0f109532e3b5f898
+Connecting to:          mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.5.0
+Using MongoDB:          8.0.6
+Using Mongosh:          2.5.0
+mongosh 2.5.1 is available for download: https://www.mongodb.com/try/download/shell
+
+For mongosh info see: https://www.mongodb.com/docs/mongodb-shell/
+
+------
+   The server generated these startup warnings when booting
+   2025-05-21T05:50:51.088+05:30: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+------
+
+test> use kannadaMoviesDB
+switched to db kannadaMoviesDB
+kannadaMoviesDB> db.catalog.createIndex({ name: "text", genre: "text" })
+name_text_genre_text
+kannadaMoviesDB> db.catalog.find({ $text: { $search: "maga" } })
+[
+  {
+    _id: ObjectId('682dfda9e2bc288598c1fb08'),
+    name: 'Tappida Maga',
+    year: 1978,
+    duration: 145,
+    rating: 8.1,
+    genre: 'Drama',
+    lang: 'Kannada'
+  }
+]
+kannadaMoviesDB> db.catalog.find({ $text: { $search: "\"tappida Maga\"" } })
+[
+  {
+    _id: ObjectId('682dfda9e2bc288598c1fb08'),
+    name: 'Tappida Maga',
+    year: 1978,
+    duration: 145,
+    rating: 8.1,
+    genre: 'Drama',
+    lang: 'Kannada'
+  }
+]
+kannadaMoviesDB> db.catalog.find({ $text: { $search: "maga -raju" } })
+[
+  {
+    _id: ObjectId('682dfda9e2bc288598c1fb08'),
+    name: 'Tappida Maga',
+    year: 1978,
+    duration: 145,
+    rating: 8.1,
+    genre: 'Drama',
+    lang: 'Kannada'
+  }
+]
+kannadaMoviesDB>

@@ -1,0 +1,92 @@
+kannadaMoviesDB> db.catalog.find({ $text: { $search: "Maga" } }).pretty()
+[
+  {
+    _id: ObjectId('682dfda9e2bc288598c1fb08'),
+    name: 'Tappida Maga',
+    year: 1978,
+    duration: 145,
+    rating: 8.1,
+    genre: 'Drama',
+    lang: 'Kannada'
+  }
+]
+kannadaMoviesDB> db.catalog.find({ $text: { $search: "\"Daari\"" } }).pretty()
+[
+  {
+    _id: ObjectId('682dfda9e2bc288598c1fb0e'),
+    name: 'Bayalu Daari',
+    year: 1976,
+    duration: 155,
+    rating: 8.2,
+    genre: 'Romance',
+    lang: 'Kannada'
+  }
+]
+
+kannadaMoviesDB> db.catalog.find({ $text: { $search: "Romance Drama -Action" } }).pretty()
+[
+  {
+    _id: ObjectId('682dfda9e2bc288598c1fb0d'),
+    name: 'Kasturi Nivasa',
+    year: 1971,
+    duration: 158,
+    rating: 9,
+    genre: 'Drama',
+    lang: 'Kannada'
+  },
+  {
+    _id: ObjectId('682dfda9e2bc288598c1fb0b'),
+    name: 'Naagarahaavu',
+    year: 1972,
+    duration: 160,
+    rating: 8.6,
+    genre: 'Drama',
+    lang: 'Kannada'
+  },
+  {
+    _id: ObjectId('682dfda9e2bc288598c1fb09'),
+    name: 'Bangaarada Manushya',
+    year: 1972,
+    duration: 165,
+    rating: 8.8,
+    genre: 'Drama',
+    lang: 'Kannada'
+  },
+  {
+    _id: ObjectId('682dfda9e2bc288598c1fb08'),
+    name: 'Tappida Maga',
+    year: 1978,
+    duration: 145,
+    rating: 8.1,
+    genre: 'Drama',
+    lang: 'Kannada'
+  },
+  {
+    _id: ObjectId('682dfda9e2bc288598c1fb10'),
+    name: 'Hombisilu',
+    year: 1978,
+    duration: 150,
+    rating: 8.1,
+    genre: 'Romance',
+    lang: 'Kannada'
+  },
+  {
+    _id: ObjectId('682dfda9e2bc288598c1fb0e'),
+    name: 'Bayalu Daari',
+    year: 1976,
+    duration: 155,
+    rating: 8.2,
+    genre: 'Romance',
+    lang: 'Kannada'
+  },
+  {
+    _id: ObjectId('682dfda9e2bc288598c1fb0c'),
+    name: 'Eradu Kanasu',
+    year: 1974,
+    duration: 150,
+    rating: 8.5,
+    genre: 'Romance',
+    lang: 'Kannada'
+  }
+]
+kannadaMoviesDB>
